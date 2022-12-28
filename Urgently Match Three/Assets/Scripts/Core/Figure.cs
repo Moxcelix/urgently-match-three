@@ -10,9 +10,9 @@ public class Figure
     public static readonly Figure Lala = new(new Vector2Int[] { new(0, 1), new(1, 1), new(1, 0), new(2, 0) });
 
     public const int rotationCount = 4;
-
-    private readonly Vector2Int[][] _points;  // [rotation][number]
-    private readonly Bounds[] _bounds;
+    
+    private readonly Vector2Int[][] _points; // [rotation][number]
+    private readonly Bounds[] _bounds;  // [rotation]
 
     /* ------- ~unreal axis system~ --------+    
      |                                      |
@@ -29,27 +29,31 @@ public class Figure
         _points = new Vector2Int[rotationCount][];
         _bounds = new Bounds[rotationCount];
 
-        for (int i = 0; i < rotationCount; i++)
+        // replicate templates
+        for (var i = 0; i < rotationCount; i++)
             _points[i] = (Vector2Int[])points.Clone();
 
-        for (int j = 0; j < points.Length; j++)
+        // bounds for first rotation
+        for (var j = 0; j < points.Length; j++)
             _bounds[0].Expand(_points[0][j]);
-
-        for (int i = 1; i < rotationCount; i++)
+        
+        // without first rotation
+        for (var i = 1; i < rotationCount; i++)
         {
-            for (int j = 0; j < points.Length; j++)
+            for (var j = 0; j < points.Length; j++)
             {
+                // rotate templates
                 _points[i][j].x = _points[i - 1][j].y;
                 _points[i][j].y = -_points[i - 1][j].x;
-
+                // create bounds for templates
                 _bounds[i].Expand(_points[i][j]);
             }
         }
     }
 
-    public Bounds GetBounds(int rotation) 
+    public Bounds GetBounds(int rotation)
     {
-        if (rotation < 0 && rotation >= rotationCount)
+        if (rotation is < 0 or >= rotationCount)
             throw new System.ArgumentOutOfRangeException();
 
         return _bounds[rotation];
@@ -57,7 +61,7 @@ public class Figure
 
     public Vector2Int[] GetPoints(int rotation)
     {
-        if (rotation < 0 && rotation >= rotationCount)
+        if (rotation is < 0 or >= rotationCount)
             throw new System.ArgumentOutOfRangeException();
 
         return _points[rotation];

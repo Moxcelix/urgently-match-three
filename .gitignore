@@ -28,3 +28,6 @@ sysinfo.txt
 
 # msvs temporary
 **/.vs/
+
+# jetbrains temporary
+**/.idea/
