@@ -1,10 +1,12 @@
+using System.Collections.Generic;
+
 public abstract class Property 
 {
     public static readonly Property Color = new ColorProperty();
     public static readonly Property Form = new FormProperty();
 
     public abstract bool Equals(Tile a, Tile b);
-    public abstract Figure[] Figures { get; }
+    public abstract IEnumerable<Figure> Figures { get; }
 }
 
 public sealed class ColorProperty : Property 
@@ -21,14 +23,13 @@ public sealed class ColorProperty : Property
         CYAN,
     }
 
-    private readonly Figure[] _figures = new Figure[]
-    {
+    private readonly Figure[] _figures = {
         Figure.Oleg, 
         Figure.Boba, 
-        Figure.Tola,
+        Figure.Tola
     };
 
-    public override Figure[] Figures => _figures;
+    public override IEnumerable<Figure> Figures => _figures;
 
     public override bool Equals(Tile a, Tile b)
     {
@@ -48,15 +49,14 @@ public sealed class FormProperty : Property
         RHOMBUS,
     }
 
-    private readonly Figure[] _figures = new Figure[]
-    {
+    private readonly Figure[] _figures = {
         Figure.Oleg,
         Figure.Lola,
         Figure.Lala,
         Figure.Tetr,
     };
 
-    public override Figure[] Figures => _figures;
+    public override IEnumerable<Figure> Figures => _figures;
 
     public override bool Equals(Tile a, Tile b)
     {

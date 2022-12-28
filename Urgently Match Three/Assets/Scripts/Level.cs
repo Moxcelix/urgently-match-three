@@ -17,27 +17,20 @@ public class Level : MonoBehaviour
     {
         Texture2D texture = new(_board.Width, _board.Height);
 
-        for (int x = 0; x < _board.Width; x++)
-            for (int y = 0; y < _board.Height; y++)
+        for (var x = 0; x < _board.Width; x++)
+            for (var y = 0; y < _board.Height; y++)
             {
-                Color color = Color.red;
-                ColorProperty.Type type = _board.GetTile(x, y).Color;
+                var color = Color.red;
+                var type = _board.GetTile(x, y).Color;
 
-                switch (type)
+                color = type switch
                 {
-                    case ColorProperty.Type.RED:
-                        color = Color.red;
-                        break;
-                    case ColorProperty.Type.GREEN:
-                        color = Color.green;
-                        break;
-                    case ColorProperty.Type.BLUE:
-                        color = Color.blue;
-                        break;
-                    case ColorProperty.Type.YELLOW:
-                        color = Color.yellow;
-                        break;
-                }
+                    ColorProperty.Type.RED => Color.red,
+                    ColorProperty.Type.GREEN => Color.green,
+                    ColorProperty.Type.BLUE => Color.blue,
+                    ColorProperty.Type.YELLOW => Color.yellow,
+                    _ => color
+                };
 
                 texture.SetPixel(x, y, color);
             }
@@ -45,7 +38,7 @@ public class Level : MonoBehaviour
         texture.filterMode = FilterMode.Point;
         texture.Apply();
 
-        _image.sprite = Sprite.Create(texture, new(0, 0, _board.Width, _board.Height), Vector2.zero);
+        _image.sprite = Sprite.Create(texture, new Rect(0, 0, _board.Width, _board.Height), Vector2.zero);
     }
 
 }

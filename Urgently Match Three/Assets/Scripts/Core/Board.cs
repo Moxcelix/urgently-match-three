@@ -18,7 +18,7 @@ public class Board
     {
         _width = width;
         _height = height;
-        _bounds = new(0, 0, _width, _height);
+        _bounds = new Bounds(0, 0, _width, _height);
         _tiles = new Tile[_width, _height];
     }
 
@@ -29,9 +29,9 @@ public class Board
     
     public void Check(Property property)
     {
-        for (int i = 0; i < _width; i++)
+        for (var i = 0; i < _width; i++)
         {
-            for (int j = 0; j < _height; j++)
+            for (var j = 0; j < _height; j++)
             {
                 Check(property, i, j);
             }
@@ -42,7 +42,7 @@ public class Board
     {
         foreach (var figure in property.Figures)
         {
-            for (int r = 0; r < Figure.rotationCount; r++)
+            for (var r = 0; r < Figure.rotationCount; r++)
             {
                 if (IsFigure(figure, property, x, y, r))
                 {
@@ -58,9 +58,9 @@ public class Board
         if (!InRange(figure, x, y, rotation))
             return false;
 
-        Vector2Int[] points = figure.GetPoints(rotation);
+        var points = figure.GetPoints(rotation);
 
-        for (int i = 1; i < points.Length; i++)
+        for (var i = 1; i < points.Length; i++)
         {
             Tile a = _tiles[points[i - 1].x + x, points[i - 1].y + y];
             Tile b = _tiles[points[i].x + x, points[i].y + y];
@@ -76,27 +76,18 @@ public class Board
 
     public void Test()
     {
-        for (int i = 0; i < _width; i++)
+        for (var i = 0; i < _width; i++)
         {
-            for (int j = 0; j < _height; j++)
+            for (var j = 0; j < _height; j++)
             {
-                int r = Random.Range(0, 4);
-
-                switch (r)
+                _tiles[i, j] = Random.Range(0, 4) switch
                 {
-                    case 0:
-                        _tiles[i, j] = new Tile(ColorProperty.Type.RED, FormProperty.Type.SQUARE);
-                        break;
-                    case 1:
-                        _tiles[i, j] = new Tile(ColorProperty.Type.GREEN, FormProperty.Type.SQUARE);
-                        break;
-                    case 2:
-                        _tiles[i, j] = new Tile(ColorProperty.Type.BLUE, FormProperty.Type.SQUARE);
-                        break;
-                    case 3:
-                        _tiles[i, j] = new Tile(ColorProperty.Type.YELLOW, FormProperty.Type.SQUARE);
-                        break;
-                }
+                    0 => new Tile(ColorProperty.Type.RED, FormProperty.Type.SQUARE),
+                    1 => new Tile(ColorProperty.Type.GREEN, FormProperty.Type.SQUARE),
+                    2 => new Tile(ColorProperty.Type.BLUE, FormProperty.Type.SQUARE),
+                    3 => new Tile(ColorProperty.Type.YELLOW, FormProperty.Type.SQUARE),
+                    _ => _tiles[i, j]
+                };
             }
         }
 

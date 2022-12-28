@@ -39,7 +39,7 @@ public struct Bounds
 
     public bool InRange(int x, int y)
     {
-        return (x >= left) && (x < right) && (y >= down) && (y < up);
+        return x >= left && x < right && y >= down && y < up;
     }
 
     public bool InRange(Bounds bounds) 
