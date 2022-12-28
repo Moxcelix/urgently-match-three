@@ -9,7 +9,7 @@ public class Level : MonoBehaviour
 
     private void Start()
     {
-        Test();  // for testing
+        PlaceRandomSquaresAndPrintCheckedFiguresCount();  // for testing
     }
 
     private void Show() // for testing
@@ -40,7 +40,7 @@ public class Level : MonoBehaviour
         _image.sprite = Sprite.Create(texture, new Rect(0, 0, _board.Width, _board.Height), Vector2.zero);
     }
 
-    private void Test()
+    private void PlaceRandomSquaresAndPrintCheckedFiguresCount()
     {
         _board.FillRandomSquares();
 
@@ -56,7 +56,7 @@ public class Level : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Test();
+            PlaceRandomSquaresAndPrintCheckedFiguresCount();
         }
     }
 }
