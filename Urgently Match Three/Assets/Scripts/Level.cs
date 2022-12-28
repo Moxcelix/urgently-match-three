@@ -9,8 +9,7 @@ public class Level : MonoBehaviour
 
     private void Start()
     {
-        _board.Test();  // for testing
-        Show();         // for testing
+        Test();  // for testing
     }
 
     private void Show() // for testing
@@ -41,5 +40,23 @@ public class Level : MonoBehaviour
         _image.sprite = Sprite.Create(texture, new Rect(0, 0, _board.Width, _board.Height), Vector2.zero);
     }
 
-}
+    private void Test()
+    {
+        _board.FillRandomSquares();
 
+        Debug.Log(_board.Check(Property.Color) + " figures marked to collapse");
+
+        _board.ClearCollapsingStates();
+        
+        Show();
+    }
+
+    // for testing
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Test();
+        }
+    }
+}

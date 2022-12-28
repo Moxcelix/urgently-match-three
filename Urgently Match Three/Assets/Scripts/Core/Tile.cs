@@ -1,4 +1,3 @@
-
 public class Tile
 {
     public ColorProperty.Type Color { get; private set; }

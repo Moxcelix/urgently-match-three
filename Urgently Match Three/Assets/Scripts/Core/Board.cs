@@ -1,25 +1,30 @@
-using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Board
 {
+    [System.Flags]
+    private enum CollapsingState
+    {
+        IDLE = 0,
+        COLLAPSE
+    } 
+    
     private Tile[,] _tiles;
-
-    private readonly int _width;
-    private readonly int _height;
+    private CollapsingState[,] _collapsingStates;
 
     private readonly Bounds _bounds;
+    
+    public int Width { get; }
 
-    private int _figuresCount = 0; // for testing
-
-    public int Width => _width;
-    public int Height => _height;
+    public int Height { get; }
 
     public Board(int width, int height)
     {
-        _width = width;
-        _height = height;
-        _bounds = new Bounds(0, 0, _width, _height);
-        _tiles = new Tile[_width, _height];
+        Width = width;
+        Height = height;
+        _bounds = new Bounds(0, 0, Width, Height);
+        _tiles = new Tile[Width, Height];
+        _collapsingStates = new CollapsingState[Width, Height];
     }
 
     public Tile GetTile(int x, int y) 
@@ -27,33 +32,43 @@ public class Board
         return _tiles[x, y];
     }
     
-    public void Check(Property property)
+    public int Check(Property property)
     {
-        for (var i = 0; i < _width; i++)
+        var checkedFigures = 0;
+        
+        for (var i = 0; i < Width; i++)
         {
-            for (var j = 0; j < _height; j++)
+            for (var j = 0; j < Height; j++)
             {
-                Check(property, i, j);
+                checkedFigures += CheckCenter(property, i, j);
             }
         }
+
+        return checkedFigures;
     }
 
-    private void Check(Property property, int x, int y)
+    private int CheckCenter(Property property, int x, int y)
     {
+        var checkedFigures = 0;
+        
         foreach (var figure in property.Figures)
         {
-            for (var r = 0; r < Figure.rotationCount; r++)
+            for (var r = 0; r < Figure.RotationCount; r++)
             {
-                if (IsFigure(figure, property, x, y, r))
-                {
-                    // do something
-                    _figuresCount++;
-                }
+                if (!IsFigureCanBeCollapsed(figure, property, x, y, r)) continue;
+                
+                SetCollapsingState(figure, property, x, y, r);
+                    
+                // Will be collapsed in other place 
+                    
+                ++checkedFigures;
             }
         }
+
+        return checkedFigures;
     }
 
-    private bool IsFigure(Figure figure, Property property, int x, int y, int rotation)
+    private bool IsFigureCanBeCollapsed(Figure figure, Property property, int x, int y, int rotation)
     {
         if (!InRange(figure, x, y, rotation))
             return false;
@@ -62,11 +77,19 @@ public class Board
 
         for (var i = 1; i < points.Length; i++)
         {
-            Tile a = _tiles[points[i - 1].x + x, points[i - 1].y + y];
-            Tile b = _tiles[points[i].x + x, points[i].y + y];
+            var aX = points[i - 1].x + x;
+            var aY = points[i - 1].y + y;
+            var a = _tiles[aX, aY];
 
-            if (!a.Equals(b, property))
-            {
+            var bX = points[i].x + x;
+            var bY = points[i].y + y;
+            var b = _tiles[bX, bY];
+
+            if (
+                _collapsingStates[aX, aY] is CollapsingState.COLLAPSE ||
+                _collapsingStates[bX, bY] is CollapsingState.COLLAPSE ||
+                !a.Equals(b, property)
+            ) {
                 return false;
             }
         }
@@ -74,11 +97,33 @@ public class Board
         return true;
     }
 
-    public void Test()
+    private void SetCollapsingState(Figure figure, Property property, int centerX, int centerY, int rotation)
     {
-        for (var i = 0; i < _width; i++)
+        foreach (var figPoint in figure.GetPoints(rotation))
         {
-            for (var j = 0; j < _height; j++)
+            var x = figPoint.x + centerX;
+            var y = figPoint.y + centerY;
+
+            _collapsingStates[x, y] = CollapsingState.COLLAPSE;
+        }
+    }
+    
+    public void ClearCollapsingStates()
+    {
+        for (var i = 0; i < Width; i++)
+        {
+            for (var j = 0; j < Height; j++)
+            {
+                _collapsingStates[i, j] = CollapsingState.IDLE;
+            }
+        }
+    }
+
+    public void FillRandomSquares()
+    {
+        for (var i = 0; i < Width; i++)
+        {
+            for (var j = 0; j < Height; j++)
             {
                 _tiles[i, j] = Random.Range(0, 4) switch
                 {
@@ -90,12 +135,8 @@ public class Board
                 };
             }
         }
-
-        Check(Property.Color);
-
-        Debug.Log(_figuresCount);
     }
-
+    
     private bool InRange(Figure figure, int x, int y, int rotation)
     {
         var bounds = figure.GetBounds(rotation);
