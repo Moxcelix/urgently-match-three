@@ -21,12 +21,14 @@ public sealed class ColorProperty : Property
         BLACK,
         MAGENTA,
         CYAN,
+
+        END
     }
 
     private readonly Figure[] _figures = {
-        Figure.Oleg, 
+        Figure.Tola,
         Figure.Boba, 
-        Figure.Tola
+        Figure.Oleg, 
     };
 
     public override IEnumerable<Figure> Figures => _figures;
@@ -47,13 +49,15 @@ public sealed class FormProperty : Property
         OCTAGON,
         HEXAGON,
         RHOMBUS,
+
+        END
     }
 
     private readonly Figure[] _figures = {
-        Figure.Oleg,
+        Figure.Tetr,
         Figure.Lola,
         Figure.Lala,
-        Figure.Tetr,
+        Figure.Oleg,
     };
 
     public override IEnumerable<Figure> Figures => _figures;

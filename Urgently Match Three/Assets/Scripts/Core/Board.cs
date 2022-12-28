@@ -3,19 +3,18 @@ using Random = UnityEngine.Random;
 public class Board
 {
     [System.Flags]
-    private enum CollapsingState
+    private enum CollapsingState : short
     {
         IDLE = 0,
-        COLLAPSE
+        COLLAPSE = 1,
     } 
     
-    private Tile[,] _tiles;
-    private CollapsingState[,] _collapsingStates;
+    private readonly Tile[,] _tiles;
+    private readonly CollapsingState[,] _collapsingStates;
 
     private readonly Bounds _bounds;
     
     public int Width { get; }
-
     public int Height { get; }
 
     public Board(int width, int height)
@@ -125,14 +124,10 @@ public class Board
         {
             for (var j = 0; j < Height; j++)
             {
-                _tiles[i, j] = Random.Range(0, 4) switch
-                {
-                    0 => new Tile(ColorProperty.Type.RED, FormProperty.Type.SQUARE),
-                    1 => new Tile(ColorProperty.Type.GREEN, FormProperty.Type.SQUARE),
-                    2 => new Tile(ColorProperty.Type.BLUE, FormProperty.Type.SQUARE),
-                    3 => new Tile(ColorProperty.Type.YELLOW, FormProperty.Type.SQUARE),
-                    _ => _tiles[i, j]
-                };
+                var color = (ColorProperty.Type)Random.Range(0, (int)ColorProperty.Type.END); 
+                var form = (FormProperty.Type)Random.Range(0, (int)FormProperty.Type.END);
+
+                _tiles[i, j] = new Tile(color, form);
             }
         }
     }

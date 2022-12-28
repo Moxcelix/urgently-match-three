@@ -14,7 +14,7 @@ public class Figure
     public static readonly Figure Oleg = new(new Vector2Int[] { new(0, 0), new(1, 0), new(2, 0) });
     public static readonly Figure Boba = new(new Vector2Int[] { new(0, 0), new(1, 0), new(1, 1) });
     public static readonly Figure Tola = new(new Vector2Int[] { new(0, 0), new(1, 0), new(0, 1), new(1, 1) });
-    public static readonly Figure Tetr = new(new Vector2Int[] { new(0, 0), new(1, 0), new(1, 0), new(2, 0) });
+    public static readonly Figure Tetr = new(new Vector2Int[] { new(0, 0), new(1, 0), new(2, 0), new(3, 0) });
     public static readonly Figure Lola = new(new Vector2Int[] { new(0, 0), new(1, 0), new(1, 1), new(2, 1) });
     public static readonly Figure Lala = new(new Vector2Int[] { new(0, 1), new(1, 1), new(1, 0), new(2, 0) });
 
