@@ -154,34 +154,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _colorMap:
   - _type: 0
-    _color: {r: 1, g: 0, b: 0, a: 1}
+    _value: {r: 1, g: 0, b: 0, a: 1}
   - _type: 1
-    _color: {r: 0, g: 1, b: 0.15778756, a: 1}
+    _value: {r: 0, g: 1, b: 0.14433002, a: 1}
   - _type: 2
-    _color: {r: 0, g: 0.3285532, b: 1, a: 1}
+    _value: {r: 0, g: 0.4077053, b: 1, a: 1}
   - _type: 3
-    _color: {r: 0.9948019, g: 1, b: 0, a: 1}
+    _value: {r: 0.999279, g: 1, b: 0, a: 1}
   - _type: 4
-    _color: {r: 0.754717, g: 0.754717, b: 0.754717, a: 1}
+    _value: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
   - _type: 5
-    _color: {r: 0.13207549, g: 0.13207549, b: 0.13207549, a: 1}
+    _value: {r: 0.1509434, g: 0.1509434, b: 0.1509434, a: 1}
   - _type: 6
-    _color: {r: 1, g: 0, b: 0.8727646, a: 1}
+    _value: {r: 1, g: 0, b: 0.98942757, a: 1}
   - _type: 7
-    _color: {r: 0, g: 1, b: 0.85526943, a: 1}
+    _value: {r: 0, g: 1, b: 0.89260936, a: 1}
   _formMap:
   - _type: 0
-    _sprite: {fileID: -143379752, guid: 48b155578fd6c134aa773e9b2849ffe4, type: 3}
+    _value: {fileID: -143379752, guid: 48b155578fd6c134aa773e9b2849ffe4, type: 3}
   - _type: 1
-    _sprite: {fileID: -1721556138, guid: 48b155578fd6c134aa773e9b2849ffe4, type: 3}
+    _value: {fileID: -1721556138, guid: 48b155578fd6c134aa773e9b2849ffe4, type: 3}
   - _type: 2
-    _sprite: {fileID: -17611325, guid: 48b155578fd6c134aa773e9b2849ffe4, type: 3}
+    _value: {fileID: -17611325, guid: 48b155578fd6c134aa773e9b2849ffe4, type: 3}
   - _type: 3
-    _sprite: {fileID: -1185701729, guid: 48b155578fd6c134aa773e9b2849ffe4, type: 3}
+    _value: {fileID: -1185701729, guid: 48b155578fd6c134aa773e9b2849ffe4, type: 3}
   - _type: 4
-    _sprite: {fileID: 1499745071, guid: 48b155578fd6c134aa773e9b2849ffe4, type: 3}
+    _value: {fileID: 1499745071, guid: 48b155578fd6c134aa773e9b2849ffe4, type: 3}
   - _type: 5
-    _sprite: {fileID: 849396494, guid: 48b155578fd6c134aa773e9b2849ffe4, type: 3}
+    _value: {fileID: 849396494, guid: 48b155578fd6c134aa773e9b2849ffe4, type: 3}
 --- !u!4 &76841162
 Transform:
   m_ObjectHideFlags: 0
@@ -669,7 +669,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abaf49b024c9cd347be64797efc67ca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _image: {fileID: 611191779}
   _boardShower: {fileID: 545065779}
 --- !u!4 &2023273062
 Transform:

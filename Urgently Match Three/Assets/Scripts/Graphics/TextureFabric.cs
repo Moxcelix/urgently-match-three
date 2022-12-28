@@ -4,21 +4,14 @@ using System.Linq;
 public sealed class TextureFabric : MonoBehaviour
 {
     [System.Serializable]
-    public class ColorPair
+    public class PropertyPair<TPropertyType, TValue>
     {
-        public ColorProperty.Type _type;
-        public Color _color;
+        public TPropertyType _type;
+        public TValue _value;
     }
 
-    [System.Serializable]
-    public class FormPair
-    {
-        public FormProperty.Type _type;
-        public Sprite _sprite;
-    }
-
-    [SerializeField] private ColorPair[] _colorMap;
-    [SerializeField] private FormPair[] _formMap;
+    [SerializeField] private PropertyPair<ColorProperty.Type, Color>[] _colorMap;
+    [SerializeField] private PropertyPair<FormProperty.Type, Sprite>[] _formMap;
 
     public static TextureFabric Instance { get; private set; }
 
@@ -32,7 +25,7 @@ public sealed class TextureFabric : MonoBehaviour
         var color = _colorMap.First(t => t._type == tile.Color);
         var sprite = _formMap.First(t => t._type == tile.Form);
 
-        return (color._color, sprite._sprite);
+        return (color._value, sprite._value);
     }
 
 }
